@@ -7,7 +7,7 @@ public class Main {
         TreeWithNode a = c.readTasks("src/datasets/Tareas.csv");
 
 
-        System.out.println(a.getTarea("T3"));
+       System.out.println(a.getTareasPorPrioridad(80,95));
 
 
     }

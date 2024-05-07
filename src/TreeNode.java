@@ -50,17 +50,19 @@ public class TreeNode {
 
 
     private void add(Tarea n) {
-        if(n.getNivel_prioridad()<this.value.getNivel_prioridad()) {
-            if(this.left == null) {
-                this.left = new TreeNode(n);
+        if(!n.getNivel_prioridad().equals(this.getValue().getNivel_prioridad())){
+            if(n.getNivel_prioridad()<this.value.getNivel_prioridad()) {
+                if(this.left == null) {
+                    this.left = new TreeNode(n);
+                }else {
+                    this.left.add(n);
+                }
             }else {
-                this.left.add(n);
-            }
-        }else {
-            if(this.right == null) {
-                this.right = new TreeNode(n);
-            }else {
-                this.right.add(n);
+                if(this.right == null) {
+                    this.right = new TreeNode(n);
+                }else {
+                    this.right.add(n);
+                }
             }
         }
     }
