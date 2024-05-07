@@ -20,7 +20,10 @@ public class Servicios {
     /*
      * Expresar la complejidad temporal del servicio 1.
      */
-    public Tarea servicio1(String ID) {	return null;}
+    public Tarea servicio1(String ID) {
+        return null;
+
+    }
 
     /*
      * Expresar la complejidad temporal del servicio 2.

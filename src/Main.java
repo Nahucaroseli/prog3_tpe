@@ -6,7 +6,9 @@ public class Main {
 
         TreeWithNode a = c.readTasks("src/datasets/Tareas.csv");
 
-        a.inorder(a.root);
+
+        System.out.println(a.getTarea("T3"));
+
 
     }
 }

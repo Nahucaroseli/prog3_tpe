@@ -9,6 +9,35 @@ public class TreeWithNode {
     }
 
 
+    private Tarea get(String id,TreeNode tree){
+        if (tree == null) {
+            return null;
+        }
+
+        if (tree.getValue().getID().equals(id)) {
+            return tree.getValue();
+        }
+
+        Tarea tareaIzquierda = this.get(id, tree.getLeft());
+        if (tareaIzquierda != null) {
+            return tareaIzquierda;
+        }
+
+        return this.get(id, tree.getRight());
+    }
+
+
+    public Tarea getTarea(String id){
+        if(root!=null){
+            return this.get(id,this.root);
+        }
+        return null;
+    }
+
+
+
+
+
 
     public void insert(Tarea value) {
         if(this.root == null) {
