@@ -3,20 +3,22 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class CSVReader {
 
+
+
     public CSVReader() {
     }
 
-    public TreeWithNode readTasks(String taskPath) {
+    public void readTasks(String taskPath,HashMap map, TreeWithNode tree,SimpleLinkedList lista) {
 
         // Obtengo una lista con las lineas del archivo
         // lines.get(0) tiene la primer linea del archivo
         // lines.get(1) tiene la segunda linea del archivo... y así
         ArrayList<String[]> lines = this.readContent(taskPath);
-        TreeWithNode tree = new TreeWithNode();
         for (String[] line: lines) {
             // Cada linea es un arreglo de Strings, donde cada posicion guarda un elemento
             String id = line[0].trim();
@@ -27,9 +29,9 @@ public class CSVReader {
             // Aca instanciar lo que necesiten en base a los datos leidos
             Tarea t1 = new Tarea(nombre,id,tiempo,critica,prioridad);
             tree.insert(t1);
+            map.put(t1.getID(),t1);
+            lista.insertFront(t1,critica);
         }
-
-        return tree;
 
     }
 

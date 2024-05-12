@@ -26,12 +26,8 @@ public class TreeWithNode {
 
 
 
-    /*
-     * Complejidad Computacional: O(N);
-     *Este metodo tiene una complejidad O(N) ya que recorre los nodos del arbol sin excepcion.
-     *
-     *
-     * */
+
+
     private void getTareasPorCriterio(TreeNode tree, Boolean esCritica, List<Tarea> resultado){
         if (tree == null) {
             return;
@@ -61,12 +57,7 @@ public class TreeWithNode {
 
 
 
-    /*
-    * Complejidad Computacional: O(Log N);
-    * Este metodo tiene una complejidad de O(Log n) porque solo tomamos la mitad de los caminos posibles al estar el
-    * arbol ordenado por nivel de prioridad
-    *
-    * */
+
     private void getTareasEntrePrioridades(TreeNode tree, int p1, int p2, List<Tarea> resultado){
          if(tree == null){
              return;
@@ -85,12 +76,7 @@ public class TreeWithNode {
 
     }
 
-    /*
-     * Complejidad Computacional: O(N);
-     *Este metodo tiene una complejidad O(N) ya que recorre los nodos del arbol sin excepcion.
-     *
-     *
-     * */
+
     private Tarea get(String id,TreeNode tree){
         if (tree == null) {
             return null;
