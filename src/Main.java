@@ -1,9 +1,7 @@
 public class Main {
 
     public static void main(String args[]) {
-        Servicios servicios = new Servicios("src/datasets/Procesadores.csv", "src/datasets/Tareas.csv");
-
-        System.out.println(servicios.servicio3(1,90));
-
+        Backtracking backtracking = new Backtracking("src/datasets/Procesadores.csv","src/datasets/Tareas.csv");
+        backtracking.backtracking();
     }
 }

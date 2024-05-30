@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,8 +28,8 @@ public class Servicios {
         tree = new TreeWithNode();
         hashMap = new HashMap<>();
         CSVReader reader = new CSVReader();
-        reader.readProcessors(pathProcesadores);
-        reader.readTasks(pathTareas,this.hashMap,this.tree,lista);
+        reader.readProcessors(pathProcesadores,new ArrayList<>());
+        reader.readTasks(pathTareas,this.hashMap,this.tree,lista,new ArrayList<>());
     }
 
     /*
