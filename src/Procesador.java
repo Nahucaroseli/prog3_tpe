@@ -55,7 +55,7 @@ public class Procesador {
     }
 
 
-    public void removeTarea(Tarea t){
+    public void quitarTarea(Tarea t){
         tareas.remove(t);
     }
 
