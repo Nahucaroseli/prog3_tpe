@@ -35,9 +35,14 @@ public class Backtracking {
     */
 
     public void backtracking(int tiempoX) {
+
         back(new ArrayList<>(procesadores), 0,0,tiempoX);
-        if(mejorSolucion!=null){
+        System.out.println("Backtracking: ");
+        if(mejorSolucion!=null && this.mejorTiempoMaximo!=0){
             mostrarSolucion(mejorSolucion);
+        }
+        else{
+            System.out.println("No hay solucion posible");
         }
 
     }
@@ -75,7 +80,7 @@ public class Backtracking {
             }
         }
 
-        if(cont>=2 && t.isEs_critica()){
+        if(cont>2 && t.isEs_critica()){
             return false;
         }
         if (!p.getRefrigerado() && p.getTiempoEjecucionMaximo() + t.getTiempo_ejecucion() > tiempoX) {
@@ -98,5 +103,6 @@ public class Backtracking {
         }
         System.out.println("Tiempo Maximo de Ejecucion: "+this.mejorTiempoMaximo);
         System.out.println("Estados generados: "+this.estadosGenerados);
+        System.out.println(" ");
     }
 }

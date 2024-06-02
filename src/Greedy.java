@@ -34,7 +34,13 @@ public class Greedy {
     public void greedy(int tiempoX){
         List<Procesador> solucion;
         solucion = greedy(new ArrayList<>(procesadores),new ArrayList<>(tareas),tiempoX);
-        mostrarSolucion(solucion);
+        System.out.println("Greedy: ");
+        if(this.tiempoMaximo != 0){
+            mostrarSolucion(solucion);
+        }else{
+            System.out.println("No hay solucion posible");
+        }
+
     }
 
     private List<Procesador> greedy(List<Procesador> solucion, List<Tarea> tareas,int tiempoX){
@@ -71,7 +77,7 @@ public class Greedy {
                 }
             }
         }
-    return solucion;
+        return solucion;
     }
 
     private boolean esValido(Procesador p,Tarea t,int tiempoX){
@@ -82,7 +88,7 @@ public class Greedy {
             }
         }
 
-        if(cont>=2 && t.isEs_critica()){
+        if(cont>2 && t.isEs_critica()){
             return false;
         }
         if (!p.getRefrigerado() && p.getTiempoEjecucionMaximo() + t.getTiempo_ejecucion() > tiempoX) {
@@ -107,6 +113,7 @@ public class Greedy {
 
 
     private void mostrarSolucion(List<Procesador> lista){
+
         for(int i = 0; i<lista.size();i++){
 
             System.out.println(lista.get(i).getId()+"{"+lista.get(i).getTareas()+"}");
