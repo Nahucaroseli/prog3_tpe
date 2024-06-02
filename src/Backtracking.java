@@ -23,6 +23,17 @@ public class Backtracking {
     }
 
 
+
+    /*
+
+        En el backtracking, en cada estado que generamos, se decide asignar la tarea, a todos los procesadores.
+        Primero se valida si se cumplen las restricciones del enunciado, y despues se calcula el tiempo maximo de
+        ejecucion del estado actual, y se llama a backtracking con la tarea asignada
+        y el nuevo tiempo maximo. Si se terminaron de asignar todas las tareas, se verifica si el nuevo tiempo maximo
+        de ejecucion es menor al mejor tiempo maximo ya almacenado. Si esto se cumple se reemplaza la solucion.
+
+    */
+
     public void backtracking(int tiempoX) {
         back(new ArrayList<>(procesadores), 0,0,tiempoX);
         if(mejorSolucion!=null){
@@ -47,11 +58,10 @@ public class Backtracking {
                 if(esValido(p,t,tiempoX)){
                     p.asignarTarea(t);
                     int nuevoTiempoMaximo = tiempoMaximo(tiempoMaximo,p);
-                    if(mejorTiempoMaximo==0 || nuevoTiempoMaximo< mejorTiempoMaximo){
+                    if(mejorTiempoMaximo==0 || nuevoTiempoMaximo < mejorTiempoMaximo){
                         back(solucion, index + 1,nuevoTiempoMaximo,tiempoX);
                     }
                     p.quitarTarea(t);
-
                 }
             }
         }
@@ -88,6 +98,5 @@ public class Backtracking {
         }
         System.out.println("Tiempo Maximo de Ejecucion: "+this.mejorTiempoMaximo);
         System.out.println("Estados generados: "+this.estadosGenerados);
-
     }
 }

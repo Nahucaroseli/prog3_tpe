@@ -10,6 +10,10 @@ public class Procesador {
     private List<Tarea> tareas;
 
 
+    public Procesador(){
+
+    }
+
 
     public Procesador(Procesador otro){
         this.tareas = otro.getTareas();

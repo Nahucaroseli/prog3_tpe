@@ -51,4 +51,8 @@ public class Tarea {
                 ", nivel_prioridad=" + nivel_prioridad +
                 '}';
     }
+
+    public int compareTo(Tarea tarea) {
+        return Integer.compare(this.getTiempo_ejecucion(),tarea.getTiempo_ejecucion());
+    }
 }
