@@ -45,21 +45,20 @@ public class Greedy {
 
     private List<Procesador> greedy(List<Procesador> solucion, List<Tarea> tareas,int tiempoX){
         ordenarTareas(tareas);//Ordenamos las tareas de Mayor a Menor segun el tiempo de ejecucion
-        Procesador procesadorConMenosCarga = null;
-        int tiempoMaximoProcesador = 9999;
+        int tiempoMaximoGlobal = 0;
+        int menorTiempoMaximoProcesador;
         while(!tareas.isEmpty()){
-            tiempoMaximoProcesador = 999;
             Tarea t = tareas.remove(0);
+            menorTiempoMaximoProcesador = Integer.MAX_VALUE;
+            Procesador procesadorConMenosCarga = null;
+
             for(Procesador p:solucion){
 
                 if(esValido(p,t,tiempoX)){
                     int tiempoMaximo = p.getTiempoEjecucionMaximo();
-                    if(tiempoMaximo < tiempoMaximoProcesador){
+                    if(tiempoMaximo < menorTiempoMaximoProcesador){
                         this.candidatosConsiderados++;
-                        tiempoMaximoProcesador = tiempoMaximo;
-                        if(tiempoMaximoProcesador> this.tiempoMaximo){
-                            this.tiempoMaximo = tiempoMaximoProcesador;
-                        }
+                        menorTiempoMaximoProcesador = tiempoMaximo;
                         procesadorConMenosCarga = p;
                     }
                 }
@@ -67,16 +66,19 @@ public class Greedy {
             if (procesadorConMenosCarga != null) {
                 procesadorConMenosCarga.asignarTarea(t);
 
-                // Reemplazamos el procesador modificado en la lista solución
                 int index = solucion.indexOf(procesadorConMenosCarga);
                 if (index != -1) {
                     solucion.set(index, procesadorConMenosCarga);
                 } else {
-                    // Si por alguna razón el procesador no está en la lista (lo cual no debería pasar)
                     solucion.add(procesadorConMenosCarga);
+                }
+                int tiempoEjecucionActual = procesadorConMenosCarga.getTiempoEjecucionMaximo();
+                if (tiempoEjecucionActual > tiempoMaximoGlobal) {
+                    tiempoMaximoGlobal = tiempoEjecucionActual;
                 }
             }
         }
+        this.tiempoMaximo = tiempoMaximoGlobal;
         return solucion;
     }
 

@@ -63,7 +63,7 @@ public class Backtracking {
                 if(esValido(p,t,tiempoX)){
                     p.asignarTarea(t);
                     int nuevoTiempoMaximo = tiempoMaximo(tiempoMaximo,p);
-                    if(mejorTiempoMaximo==0 || nuevoTiempoMaximo < mejorTiempoMaximo){
+                    if(mejorTiempoMaximo==0 || nuevoTiempoMaximo < this.mejorTiempoMaximo){
                         back(solucion, index + 1,nuevoTiempoMaximo,tiempoX);
                     }
                     p.quitarTarea(t);
@@ -83,6 +83,7 @@ public class Backtracking {
         if(cont>2 && t.isEs_critica()){
             return false;
         }
+
         if (!p.getRefrigerado() && p.getTiempoEjecucionMaximo() + t.getTiempo_ejecucion() > tiempoX) {
             return false;
         }
@@ -92,7 +93,10 @@ public class Backtracking {
 
     private int tiempoMaximo(int tiempoMaximo, Procesador p){
         int tiempoEjecucion = p.getTiempoEjecucionMaximo();
-        return Math.max(tiempoMaximo,tiempoEjecucion);
+        if(tiempoEjecucion > tiempoMaximo){
+            return tiempoEjecucion;
+        }
+        return tiempoMaximo;
     }
 
 
