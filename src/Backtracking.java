@@ -74,15 +74,15 @@ public class Backtracking {
 
     private boolean esValido(Procesador p,Tarea t,int tiempoX){
         int cont = 0;
-        for(Tarea a: p.getTareas()){
+        for(Tarea a:p.getTareas()){
             if(a.isEs_critica()){
                 cont++;
             }
         }
-
-        if(cont>2 && t.isEs_critica()){
+        if(cont==2 && t.isEs_critica()){
             return false;
         }
+
 
         if (!p.getRefrigerado() && p.getTiempoEjecucionMaximo() + t.getTiempo_ejecucion() > tiempoX) {
             return false;

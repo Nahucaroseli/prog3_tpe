@@ -10,10 +10,6 @@ public class Procesador {
     private List<Tarea> tareas;
 
 
-    public Procesador(){
-
-    }
-
 
     public Procesador(Procesador otro){
         this.tareas = otro.getTareas();
@@ -50,7 +46,6 @@ public class Procesador {
 
 
     public void asignarTarea(Tarea t){
-
         this.tareas.add(t);
     }
 
@@ -62,6 +57,8 @@ public class Procesador {
     public void quitarTarea(Tarea t){
         tareas.remove(t);
     }
+
+
 
     public int getTiempoEjecucionMaximo(){
         int cont = 0;

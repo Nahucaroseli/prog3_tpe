@@ -7,11 +7,13 @@ public class Greedy {
     private List<Procesador> procesadores;
     private int tiempoMaximo;
     private int candidatosConsiderados;
+    private int cantTareasAsignadas;
 
 
 
     public Greedy(String pathProcesadores, String pathTareas){
         this.tiempoMaximo = 0;
+        this.cantTareasAsignadas = 0;
         this.candidatosConsiderados = 0;
         this.procesadores =new ArrayList<>();
         this.tareas = new ArrayList<>();
@@ -35,9 +37,10 @@ public class Greedy {
         List<Procesador> solucion;
         solucion = greedy(new ArrayList<>(procesadores),new ArrayList<>(tareas),tiempoX);
         System.out.println("Greedy: ");
-        if(this.tiempoMaximo != 0){
+        if(this.tiempoMaximo != 0 && this.cantTareasAsignadas==tareas.size()){
             mostrarSolucion(solucion);
         }else{
+            System.out.println(cantTareasAsignadas);
             System.out.println("No hay solucion posible");
         }
 
@@ -65,7 +68,7 @@ public class Greedy {
             }
             if (procesadorConMenosCarga != null) {
                 procesadorConMenosCarga.asignarTarea(t);
-
+                cantTareasAsignadas++;
                 int index = solucion.indexOf(procesadorConMenosCarga);
                 if (index != -1) {
                     solucion.set(index, procesadorConMenosCarga);
@@ -84,15 +87,15 @@ public class Greedy {
 
     private boolean esValido(Procesador p,Tarea t,int tiempoX){
         int cont = 0;
-        for(Tarea a: p.getTareas()){
+        for(Tarea a:p.getTareas()){
             if(a.isEs_critica()){
                 cont++;
             }
         }
-
-        if(cont>2 && t.isEs_critica()){
+        if(cont==2 && t.isEs_critica()){
             return false;
         }
+
         if (!p.getRefrigerado() && p.getTiempoEjecucionMaximo() + t.getTiempo_ejecucion() > tiempoX) {
             return false;
         }
