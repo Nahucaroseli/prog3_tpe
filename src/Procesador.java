@@ -8,6 +8,8 @@ public class Procesador {
     private Boolean refrigerado;
     private Integer anio;
     private List<Tarea> tareas;
+    private int tiempoMaximoEjecucion;
+    private int cantTareasCriticas;
 
 
 
@@ -17,6 +19,8 @@ public class Procesador {
         this.id = otro.getId();
         this.refrigerado = otro.getRefrigerado();
         this.anio = otro.getAnio();
+        this.cantTareasCriticas = 0;
+        this.tiempoMaximoEjecucion = 0;
     }
 
 
@@ -46,7 +50,15 @@ public class Procesador {
 
 
     public void asignarTarea(Tarea t){
-        this.tareas.add(t);
+        if(t.isEs_critica() && cantTareasCriticas<2){
+            this.tareas.add(t);
+            cantTareasCriticas++;
+            tiempoMaximoEjecucion+= t.getTiempo_ejecucion();
+        }
+        else if (!t.isEs_critica()){
+            this.tareas.add(t);
+            tiempoMaximoEjecucion+= t.getTiempo_ejecucion();
+        }
     }
 
     public List<Tarea> getTareas() {
@@ -55,25 +67,35 @@ public class Procesador {
 
 
     public void quitarTarea(Tarea t){
-        tareas.remove(t);
-    }
 
-
-
-    public int getTiempoEjecucionMaximo(){
-        int cont = 0;
-        for(int i= 0;i<this.tareas.size();i++){
-            cont += tareas.get(i).getTiempo_ejecucion();
+        if(t.isEs_critica()){
+            this.tareas.remove(t);
+            cantTareasCriticas--;
+            tiempoMaximoEjecucion-= t.getTiempo_ejecucion();
         }
-        return cont;
+        else if (!t.isEs_critica()){
+            this.tareas.remove(t);
+            tiempoMaximoEjecucion-= t.getTiempo_ejecucion();
+        }
     }
+
+
+    public int getTiempoMaximoEjecucion() {
+        return tiempoMaximoEjecucion;
+    }
+
+    public int getCantTareasCriticas() {
+        return cantTareasCriticas;
+    }
+
 
     @Override
     public String toString() {
         return "Procesador{" +
-                "id='" + id + '\'' +
+                "cantTareasCriticas=" + cantTareasCriticas +
+                ", id='" + id + '\'' +
+                ", refrigerado=" + refrigerado +
+                ", tareas=" + tareas +
                 '}';
     }
-
-
 }

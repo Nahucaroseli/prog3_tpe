@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TreeWithNode {
 
-    protected TreeNode root;
+    private TreeNode root;
 
 
 
@@ -13,39 +14,9 @@ public class TreeWithNode {
 
 
 
-    public List<Tarea> getTareas(Boolean esCritica){
-
-        List<Tarea> resultado = new ArrayList<Tarea>();
-
-        if(root!=null){
-            this.getTareasPorCriterio(root,esCritica,resultado);
-        }
-
-        return resultado;
-    }
-
-
-
-
-
-    private void getTareasPorCriterio(TreeNode tree, Boolean esCritica, List<Tarea> resultado){
-        if (tree == null) {
-            return;
-        }
-
-        if (tree.getValue().isEs_critica() == esCritica) {
-            resultado.add(tree.getValue());
-        }
-
-
-        this.getTareasPorCriterio(tree.getLeft(), esCritica,resultado);
-        this.getTareasPorCriterio(tree.getRight(), esCritica,resultado);
-
-    }
-
 
     public List<Tarea> getTareasPorPrioridad(int p1,int p2){
-        List<Tarea> resultado = new ArrayList<Tarea>();
+        List<Tarea> resultado = new LinkedList<Tarea>();
 
         if(root!=null){
             this.getTareasEntrePrioridades(root,p1,p2,resultado);
@@ -110,13 +81,6 @@ public class TreeWithNode {
         }
     }
 
-    void inorder(TreeNode root) {
-        if (root != null) {
-            inorder(root.left);
-            System.out.print(root.value + " ");
-            inorder(root.right);
-        }
-    }
 
 
     @Override

@@ -61,7 +61,7 @@ public class Servicios {
      * Expresar la complejidad temporal del servicio 3.
      *
      * Este metodo tiene complejidad O(n), ya que se fija por donde ir dependiendo de los valores dados por el usuario, pero
-     * si se encuentra con el valor deseado, agrega a la lista resultante el valor, y despues seguira recorriendo
+     * si se encuentra con el valor deseado, agrega a la lista vinculada resultante el valor (O(1)), y despues seguira recorriendo
      * a traves de sus dos hijos.
      *
      */

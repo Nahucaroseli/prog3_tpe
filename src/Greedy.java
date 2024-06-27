@@ -33,17 +33,13 @@ public class Greedy {
      */
 
 
-    public void greedy(int tiempoX){
+    public List<Procesador> greedy(int tiempoX){
         List<Procesador> solucion;
         solucion = greedy(new ArrayList<>(procesadores),new ArrayList<>(tareas),tiempoX);
-        System.out.println("Greedy: ");
-        if(this.tiempoMaximo != 0 && this.cantTareasAsignadas==tareas.size()){
-            mostrarSolucion(solucion);
-        }else{
-            System.out.println(cantTareasAsignadas);
-            System.out.println("No hay solucion posible");
+        if(cantTareasAsignadas == candidatosConsiderados && tiempoMaximo!=0){
+            return solucion;
         }
-
+        return null;
     }
 
     private List<Procesador> greedy(List<Procesador> solucion, List<Tarea> tareas,int tiempoX){
@@ -54,13 +50,13 @@ public class Greedy {
             Tarea t = tareas.remove(0);
             menorTiempoMaximoProcesador = Integer.MAX_VALUE;
             Procesador procesadorConMenosCarga = null;
-
+            this.candidatosConsiderados++;
             for(Procesador p:solucion){
 
                 if(esValido(p,t,tiempoX)){
-                    int tiempoMaximo = p.getTiempoEjecucionMaximo();
+                    int tiempoMaximo = p.getTiempoMaximoEjecucion();
                     if(tiempoMaximo < menorTiempoMaximoProcesador){
-                        this.candidatosConsiderados++;
+
                         menorTiempoMaximoProcesador = tiempoMaximo;
                         procesadorConMenosCarga = p;
                     }
@@ -75,7 +71,7 @@ public class Greedy {
                 } else {
                     solucion.add(procesadorConMenosCarga);
                 }
-                int tiempoEjecucionActual = procesadorConMenosCarga.getTiempoEjecucionMaximo();
+                int tiempoEjecucionActual = procesadorConMenosCarga.getTiempoMaximoEjecucion();
                 if (tiempoEjecucionActual > tiempoMaximoGlobal) {
                     tiempoMaximoGlobal = tiempoEjecucionActual;
                 }
@@ -86,17 +82,12 @@ public class Greedy {
     }
 
     private boolean esValido(Procesador p,Tarea t,int tiempoX){
-        int cont = 0;
-        for(Tarea a:p.getTareas()){
-            if(a.isEs_critica()){
-                cont++;
-            }
-        }
-        if(cont==2 && t.isEs_critica()){
+        if(p.getCantTareasCriticas()==2 && t.isEs_critica()){
             return false;
         }
 
-        if (!p.getRefrigerado() && p.getTiempoEjecucionMaximo() + t.getTiempo_ejecucion() > tiempoX) {
+
+        if (!p.getRefrigerado() && p.getTiempoMaximoEjecucion() + t.getTiempo_ejecucion() > tiempoX) {
             return false;
         }
         return true;
@@ -117,16 +108,17 @@ public class Greedy {
     }
 
 
-    private void mostrarSolucion(List<Procesador> lista){
-
-        for(int i = 0; i<lista.size();i++){
-
-            System.out.println(lista.get(i).getId()+"{"+lista.get(i).getTareas()+"}");
-        }
-        System.out.println("Tiempo maximo de Ejecucion: "+this.tiempoMaximo);
-        System.out.println("Candidatos Considerados: "+this.candidatosConsiderados);
+    public int getTiempoMaximo() {
+        return tiempoMaximo;
     }
 
+    public int getCandidatosConsiderados() {
+        return candidatosConsiderados;
+    }
+
+    public int getCantTareasAsignadas() {
+        return cantTareasAsignadas;
+    }
 }
 
 

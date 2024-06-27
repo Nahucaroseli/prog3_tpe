@@ -23,8 +23,7 @@ public class Backtracking {
     }
 
 
-
-    /*
+/*
 
         En el backtracking, en cada estado que generamos, se decide asignar la tarea, a todos los procesadores.
         Primero se valida si se cumplen las restricciones del enunciado, y despues se calcula el tiempo maximo de
@@ -34,20 +33,14 @@ public class Backtracking {
 
     */
 
-    public void backtracking(int tiempoX) {
+    public List<Procesador> backtracking(int tiempoX) {
 
         back(new ArrayList<>(procesadores), 0,0,tiempoX);
-        System.out.println("Backtracking: ");
-        if(mejorSolucion!=null && this.mejorTiempoMaximo!=0){
-            mostrarSolucion(mejorSolucion);
-        }
-        else{
-            System.out.println("No hay solucion posible");
-        }
-
+        return this.mejorSolucion;
     }
 
     private void back(List<Procesador> solucion, int index,int tiempoMaximo,int tiempoX) {
+        this.estadosGenerados++;
         if (index == tareas.size()) {
             if (mejorSolucion.isEmpty() && mejorTiempoMaximo == 0 || tiempoMaximo < mejorTiempoMaximo) {
                 mejorSolucion.clear();
@@ -57,7 +50,6 @@ public class Backtracking {
                 mejorTiempoMaximo = tiempoMaximo;
             }
         } else {
-            this.estadosGenerados++;
             Tarea t = tareas.get(index);
             for (Procesador p : solucion) {
                 if(esValido(p,t,tiempoX)){
@@ -73,18 +65,12 @@ public class Backtracking {
     }
 
     private boolean esValido(Procesador p,Tarea t,int tiempoX){
-        int cont = 0;
-        for(Tarea a:p.getTareas()){
-            if(a.isEs_critica()){
-                cont++;
-            }
-        }
-        if(cont==2 && t.isEs_critica()){
+        if(p.getCantTareasCriticas()==2 && t.isEs_critica()){
             return false;
         }
 
 
-        if (!p.getRefrigerado() && p.getTiempoEjecucionMaximo() + t.getTiempo_ejecucion() > tiempoX) {
+        if (!p.getRefrigerado() && p.getTiempoMaximoEjecucion() + t.getTiempo_ejecucion() > tiempoX) {
             return false;
         }
         return true;
@@ -92,7 +78,7 @@ public class Backtracking {
 
 
     private int tiempoMaximo(int tiempoMaximo, Procesador p){
-        int tiempoEjecucion = p.getTiempoEjecucionMaximo();
+        int tiempoEjecucion = p.getTiempoMaximoEjecucion();
         if(tiempoEjecucion > tiempoMaximo){
             return tiempoEjecucion;
         }
@@ -100,13 +86,11 @@ public class Backtracking {
     }
 
 
-    private void mostrarSolucion(List<Procesador> lista){
-        for(int i = 0; i<lista.size();i++){
+    public int getMejorTiempoMaximo() {
+        return mejorTiempoMaximo;
+    }
 
-            System.out.println(lista.get(i).getId()+"{"+lista.get(i).getTareas()+"}");
-        }
-        System.out.println("Tiempo Maximo de Ejecucion: "+this.mejorTiempoMaximo);
-        System.out.println("Estados generados: "+this.estadosGenerados);
-        System.out.println(" ");
+    public int getEstadosGenerados() {
+        return estadosGenerados;
     }
 }

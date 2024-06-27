@@ -1,20 +1,10 @@
 public class TreeNode {
 
-    protected Tarea value;
-    protected TreeNode left;
-    protected TreeNode right;
+    private Tarea value;
+    private TreeNode left;
+    private TreeNode right;
 
 
-
-    public void setLeft(TreeNode left) {
-        this.left = left;
-    }
-
-
-
-    public void setRight(TreeNode right) {
-        this.right = right;
-    }
 
 
 
@@ -50,7 +40,6 @@ public class TreeNode {
 
 
     private void add(Tarea n) {
-        if(!n.getNivel_prioridad().equals(this.getValue().getNivel_prioridad())){
             if(n.getNivel_prioridad()<this.value.getNivel_prioridad()) {
                 if(this.left == null) {
                     this.left = new TreeNode(n);
@@ -63,14 +52,10 @@ public class TreeNode {
                 }else {
                     this.right.add(n);
                 }
-            }
         }
     }
 
 
 
-    public void setValue(Tarea value) {
-        this.value = value;
-    }
 
 }
