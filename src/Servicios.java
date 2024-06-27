@@ -60,9 +60,10 @@ public class Servicios {
     /*
      * Expresar la complejidad temporal del servicio 3.
      *
-     * Este metodo tiene complejidad O(n), ya que se fija por donde ir dependiendo de los valores dados por el usuario, pero
-     * si se encuentra con el valor deseado, agrega a la lista vinculada resultante el valor (O(1)), y despues seguira recorriendo
-     * a traves de sus dos hijos.
+     * Este metodo tiene una complejidad O(n+m), ya que se fija por donde ir dependiendo de los valores dados por el usuario, pero
+     * si se encuentra con el valor deseado, agrega a la lista vinculada resultante el valor (O(1)) y ademas agrega las tareas
+     * con prioridades repetidas, que se almacenan dentro del nodo (addAll O(m)), donde n es la cantidad de nodos total de arbol y m son la cantidad
+     * de tareas con la misma prioridad. Despues seguira recorriendo a traves de sus dos hijos.
      *
      */
     public List<Tarea> servicio3(int prioridadInferior, int prioridadSuperior) {

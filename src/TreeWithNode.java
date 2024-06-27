@@ -35,6 +35,7 @@ public class TreeWithNode {
          }
          if(tree.getValue().getNivel_prioridad() >= p1 && tree.getValue().getNivel_prioridad() <= p2){
              resultado.add(tree.getValue());
+             resultado.addAll(tree.getTareasConMismaPrioridad());
              getTareasEntrePrioridades(tree.getLeft(),p1,p2,resultado);
              getTareasEntrePrioridades(tree.getRight(),p1,p2,resultado);
          }

@@ -3,11 +3,9 @@ import java.util.List;
 public class Main {
 
     public static void main(String args[]) {
-        Servicios servicios = new Servicios("src/datasets/Procesadores.csv","src/datasets/Tareas.csv");
-        System.out.println(servicios.servicio3(93,100));
 
         Backtracking backtracking = new Backtracking("src/datasets/Procesadores.csv","src/datasets/Tareas.csv");
-        List<Procesador> resultBack = backtracking.backtracking(10);
+        List<Procesador> resultBack = backtracking.backtracking(200);
         System.out.println("Backtracking: ");
         if(resultBack!=null && backtracking.getMejorTiempoMaximo()!=0){
             for(int i = 0;i< resultBack.size();i++){
@@ -26,7 +24,7 @@ public class Main {
 
         System.out.println("Greedy: ");
         Greedy greedy = new Greedy("src/datasets/Procesadores.csv","src/datasets/Tareas.csv");
-        List<Procesador> resultGreedy = greedy.greedy(10);
+        List<Procesador> resultGreedy = greedy.greedy(200);
         if(resultGreedy!=null){
             for(int i = 0;i< resultGreedy.size();i++){
                 System.out.println(resultGreedy.get(i).getId()+"{"+resultGreedy.get(i).getTareas()+"}");
