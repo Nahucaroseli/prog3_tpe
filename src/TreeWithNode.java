@@ -16,7 +16,7 @@ public class TreeWithNode {
 
 
     public List<Tarea> getTareasPorPrioridad(int p1,int p2){
-        List<Tarea> resultado = new LinkedList<Tarea>();
+        List<Tarea> resultado = new LinkedList<>();
 
         if(root!=null){
             this.getTareasEntrePrioridades(root,p1,p2,resultado);
@@ -33,46 +33,22 @@ public class TreeWithNode {
          if(tree == null){
              return;
          }
-         if(tree.getValue().getNivel_prioridad() >= p1 && tree.getValue().getNivel_prioridad() <= p2){
-             resultado.add(tree.getValue());
+         if(tree.getValue() >= p1 && tree.getValue() <= p2){
              resultado.addAll(tree.getTareasConMismaPrioridad());
              getTareasEntrePrioridades(tree.getLeft(),p1,p2,resultado);
              getTareasEntrePrioridades(tree.getRight(),p1,p2,resultado);
          }
-         else if (tree.getValue().getNivel_prioridad() <= p1){
+         else if (tree.getValue() <= p1){
              getTareasEntrePrioridades(tree.getRight(),p1,p2,resultado);
          }
-         else if (tree.getValue().getNivel_prioridad() >= p2){
+         else if (tree.getValue() >= p2){
             getTareasEntrePrioridades(tree.getLeft(),p1,p2,resultado);
         }
 
     }
 
 
-    private Tarea get(String id,TreeNode tree){
-        if (tree == null) {
-            return null;
-        }
 
-        if (tree.getValue().getID().equals(id)) {
-            return tree.getValue();
-        }
-
-        Tarea tareaIzquierda = this.get(id, tree.getLeft());
-        if (tareaIzquierda != null) {
-            return tareaIzquierda;
-        }
-
-        return this.get(id, tree.getRight());
-    }
-
-
-    public Tarea getTarea(String id){
-        if(root!=null){
-            return this.get(id,this.root);
-        }
-        return null;
-    }
 
     public void insert(Tarea value) {
         if(this.root == null) {

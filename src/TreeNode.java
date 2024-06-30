@@ -3,7 +3,7 @@ import java.util.List;
 
 public class TreeNode {
 
-    private Tarea value;
+    private int prioridad;
     private TreeNode left;
     private TreeNode right;
     private List<Tarea> tareasConMismaPrioridad;
@@ -13,16 +13,17 @@ public class TreeNode {
 
 
     public TreeNode(Tarea value) {
-        this.value = value;
+        this.prioridad = value.getNivel_prioridad();
         this.left = null;
         this.right = null;
         this.tareasConMismaPrioridad = new LinkedList<>();
+        this.tareasConMismaPrioridad.add(value);
     }
 
 
 
-    public Tarea getValue() {
-        return value;
+    public int getValue() {
+        return prioridad;
     }
 
 
@@ -48,13 +49,13 @@ public class TreeNode {
 
 
     private void add(Tarea n) {
-            if(n.getNivel_prioridad()<this.value.getNivel_prioridad()) {
+            if(n.getNivel_prioridad()<this.prioridad) {
                 if(this.left == null) {
                     this.left = new TreeNode(n);
                 }else {
                     this.left.add(n);
                 }
-            }else if (n.getNivel_prioridad() > this.value.getNivel_prioridad()){
+            }else if (n.getNivel_prioridad() > this.prioridad){
                 if(this.right == null) {
                     this.right = new TreeNode(n);
                 }else {
@@ -67,6 +68,10 @@ public class TreeNode {
     }
 
 
-
-
+    @Override
+    public String toString() {
+        return "TreeNode{" +
+                "prioridad=" + prioridad +
+                '}';
+    }
 }

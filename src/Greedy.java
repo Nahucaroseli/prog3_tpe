@@ -5,18 +5,14 @@ public class Greedy {
 
     private List<Tarea> tareas;
     private List<Procesador> procesadores;
-    private int tiempoMaximo;
-    private int candidatosConsiderados;
-    private int cantTareasAsignadas;
+    private SolucionGreedy solucion;
 
 
 
     public Greedy(String pathProcesadores, String pathTareas){
-        this.tiempoMaximo = 0;
-        this.cantTareasAsignadas = 0;
-        this.candidatosConsiderados = 0;
-        this.procesadores =new ArrayList<>();
-        this.tareas = new ArrayList<>();
+        this.procesadores =new LinkedList<>();
+        this.tareas = new LinkedList<>();
+        this.solucion = new SolucionGreedy(0,0);
         CSVReader reader = new CSVReader();
         reader.readTasks(pathTareas,new HashMap(),new TreeWithNode(),new SimpleLinkedList<>(),tareas);
         reader.readProcessors(pathProcesadores,procesadores);
@@ -25,32 +21,31 @@ public class Greedy {
 
 
     /*
-        Primero se ordena de mayor a menor las tareas segun su tiempo de ejecucion,a partir de ahi, se verifican
-        las dos restricciones del enunciado.
-        En cada iteracion de while, se elige el procesador que menos carga tiene en ese momento, se guarda
-        el procesador en una variable auxiliar, el cual va a servir despues para sacar el index de la lista original
-        y reemplazarlo por el procesador con la tarea asignada.
+        Primero se ordena de mayor a menor las tareas segun su tiempo de ejecucion,a partir de ahi,
+        En cada iteracion de while,se verifican las dos restricciones del enunciado y se elige el procesador que menos carga tiene en ese momento,luego se guarda
+        el procesador en una variable auxiliar, el cual va a servir despues para sacar el index de la lista solucion
+        y reemplazarlo por el procesador con la tarea asignada en la clase SolucionGreedy. Ademas, cuando la lista
+        de tareas quede vacia, se actualiza el tiempo global y se retorna la solucion. La clase SolucionGreedy se encarga
+        de almacenar y actualizar la cantidad de tareas asignadas, los candidatos del algoritmo y la solucion resultante. Por ultimo
+        se muestran los datos resultantes del algoritmo al usuario.
      */
 
 
-    public List<Procesador> greedy(int tiempoX){
-        List<Procesador> solucion;
-        solucion = greedy(new ArrayList<>(procesadores),new ArrayList<>(tareas),tiempoX);
-        if(cantTareasAsignadas == candidatosConsiderados && tiempoMaximo!=0){
-            return solucion;
-        }
-        return null;
+    public SolucionGreedy greedy(int tiempoX){
+        this.solucion = greedy(new ArrayList<>(procesadores),new ArrayList<>(tareas),tiempoX);
+        return this.solucion;
     }
 
-    private List<Procesador> greedy(List<Procesador> solucion, List<Tarea> tareas,int tiempoX){
+    private SolucionGreedy greedy(List<Procesador> solucion, List<Tarea> tareas,int tiempoX){
         ordenarTareas(tareas);//Ordenamos las tareas de Mayor a Menor segun el tiempo de ejecucion
         int tiempoMaximoGlobal = 0;
         int menorTiempoMaximoProcesador;
         while(!tareas.isEmpty()){
             Tarea t = tareas.remove(0);
+
             menorTiempoMaximoProcesador = Integer.MAX_VALUE;
             Procesador procesadorConMenosCarga = null;
-            this.candidatosConsiderados++;
+            this.solucion.actualizarCandidatosConsiderados();
             for(Procesador p:solucion){
 
                 if(esValido(p,t,tiempoX)){
@@ -63,13 +58,14 @@ public class Greedy {
                 }
             }
             if (procesadorConMenosCarga != null) {
+
                 procesadorConMenosCarga.asignarTarea(t);
-                cantTareasAsignadas++;
-                int index = solucion.indexOf(procesadorConMenosCarga);
+                this.solucion.actualizarCantTareasAsignadas();
+                int index = this.solucion.getSolucion().indexOf(procesadorConMenosCarga);
                 if (index != -1) {
-                    solucion.set(index, procesadorConMenosCarga);
+                    this.solucion.reemplazarProcesadorEnPosicionEspecifica(index,procesadorConMenosCarga);
                 } else {
-                    solucion.add(procesadorConMenosCarga);
+                    this.solucion.agregarProcesadorASolucion(procesadorConMenosCarga);
                 }
                 int tiempoEjecucionActual = procesadorConMenosCarga.getTiempoMaximoEjecucion();
                 if (tiempoEjecucionActual > tiempoMaximoGlobal) {
@@ -77,8 +73,8 @@ public class Greedy {
                 }
             }
         }
-        this.tiempoMaximo = tiempoMaximoGlobal;
-        return solucion;
+        this.solucion.actualizarTiempoMaximo(tiempoMaximoGlobal);
+        return this.solucion;
     }
 
     private boolean esValido(Procesador p,Tarea t,int tiempoX){
@@ -107,18 +103,6 @@ public class Greedy {
         }
     }
 
-
-    public int getTiempoMaximo() {
-        return tiempoMaximo;
-    }
-
-    public int getCandidatosConsiderados() {
-        return candidatosConsiderados;
-    }
-
-    public int getCantTareasAsignadas() {
-        return cantTareasAsignadas;
-    }
 }
 
 

@@ -46,8 +46,8 @@ public class Tarea {
         return "Tarea{" +
                 "ID='" + ID + '\'' +
                 ", tiempo_ejecucion=" + tiempo_ejecucion +
-                ", es_critica=" + es_critica +
-                ", nivel_prioridad=" + nivel_prioridad +
+                ", critica=" + es_critica +
+                ", prioridad=" + nivel_prioridad +
                 '}';
     }
 
