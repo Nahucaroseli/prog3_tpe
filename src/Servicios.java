@@ -67,7 +67,6 @@ public class Servicios {
      *
      */
     public List<Tarea> servicio3(int prioridadInferior, int prioridadSuperior) {
-        System.out.println(tree.toString());
         return tree.getTareasPorPrioridad(prioridadInferior,prioridadSuperior);
     }
 
