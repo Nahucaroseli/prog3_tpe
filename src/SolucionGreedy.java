@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class SolucionGreedy {
@@ -29,21 +28,13 @@ public class SolucionGreedy {
         this.candidatosConsiderados++;
     }
 
-    public void reemplazarProcesadorEnPosicionEspecifica(int index, Procesador procesadorConMenosCarga){
-        solucion.set(index, procesadorConMenosCarga);
-    }
 
-    public List<Procesador> getSolucion(){
-        return this.solucion;
-    }
 
     public int getCantTareasAsignadas(){
         return this.cantTareasAsignadas;
     }
 
-    public void agregarProcesadorASolucion(Procesador procesadorConMenosCarga){
-        solucion.add(procesadorConMenosCarga);
-    }
+
 
     public void actualizarTiempoMaximo(int nuevoTiempoMaximo){
         this.tiempoMaximo = nuevoTiempoMaximo;
@@ -53,6 +44,11 @@ public class SolucionGreedy {
     public int getTiempoMaximo() {
         return tiempoMaximo;
     }
+
+    public void guardarSolucion(List<Procesador> solucion){
+        this.solucion = solucion;
+    }
+
 
     public int getCandidatosConsiderados() {
         return candidatosConsiderados;
@@ -65,10 +61,8 @@ public class SolucionGreedy {
             for(int i = 0;i< solucion.size();i++){
                 System.out.println(solucion.get(i).getId()+"{"+solucion.get(i).getTareas()+"}");
             }
-            System.out.println("Candidatos Considerados: ");
-            System.out.println(this.getCandidatosConsiderados());
-            System.out.println("Tiempo Maximo: ");
-            System.out.println(this.getTiempoMaximo());
+            System.out.println("Candidatos Considerados: "+this.getCandidatosConsiderados());
+            System.out.println("Tiempo Maximo: "+this.getTiempoMaximo());
         }else{
             System.out.println("No hay solucion");
         }

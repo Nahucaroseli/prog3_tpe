@@ -7,12 +7,14 @@ public class Backtracking {
 
     private List<Tarea> tareas;
     private List<Procesador> procesadores;
-    private SolucionBacktracking solucion;
+    private SolucionBacktracking solucionBack;
+    private List<Procesador> mejorSolucion;
 
 
     public Backtracking(String pathProcesadores, String pathTareas){
         this.procesadores =new LinkedList<>();
-        this.solucion = new SolucionBacktracking(0,0);
+        this.mejorSolucion = new LinkedList<>();
+        this.solucionBack = new SolucionBacktracking(0,0);
         this.tareas = new LinkedList<>();
         CSVReader reader = new CSVReader();
         reader.readTasks(pathTareas,new HashMap(),new TreeWithNode(),new SimpleLinkedList<>(),tareas);
@@ -34,15 +36,19 @@ public class Backtracking {
     public SolucionBacktracking backtracking(int tiempoX) {
 
         back(new ArrayList<>(procesadores), 0,0,tiempoX);
-        return this.solucion;
+        this.solucionBack.guardarSolucion(this.mejorSolucion);
+        return this.solucionBack;
     }
 
     private void back(List<Procesador> solucion, int index,int tiempoMaximo,int tiempoX) {
-        this.solucion.actualizarEstadosGenerados();
+        this.solucionBack.actualizarEstadosGenerados();
         if (index == tareas.size()) {
-            if (this.solucion.getSolucion().isEmpty() && this.solucion.getMejorTiempoMaximo() == 0 || tiempoMaximo < this.solucion.getMejorTiempoMaximo()) {
-                this.solucion.actualizarSolucion(solucion);
-                this.solucion.actualizarMejorTiempoMaximo(tiempoMaximo);
+            if (this.mejorSolucion.isEmpty() && this.solucionBack.getMejorTiempoMaximo() == 0 || tiempoMaximo < this.solucionBack.getMejorTiempoMaximo()) {
+                this.mejorSolucion.clear();
+                for (Procesador p : solucion) {
+                    this.mejorSolucion.add(new Procesador(p));
+                }
+                this.solucionBack.actualizarMejorTiempoMaximo(tiempoMaximo);
             }
         } else {
             Tarea t = tareas.get(index);
@@ -50,7 +56,7 @@ public class Backtracking {
                 if(esValido(p,t,tiempoX)){
                     p.asignarTarea(t);
                     int nuevoTiempoMaximo = tiempoMaximo(tiempoMaximo,p);
-                    if(this.solucion.getMejorTiempoMaximo()==0 || nuevoTiempoMaximo < this.solucion.getMejorTiempoMaximo()){
+                    if(this.solucionBack.getMejorTiempoMaximo()==0 || nuevoTiempoMaximo < this.solucionBack.getMejorTiempoMaximo()){
                         back(solucion, index + 1,nuevoTiempoMaximo,tiempoX);
                     }
                     p.quitarTarea(t);

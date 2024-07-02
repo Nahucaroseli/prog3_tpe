@@ -38,17 +38,10 @@ public class SolucionBacktracking {
 
 
 
-    public void actualizarSolucion(List<Procesador> solucion){
-        this.solucion.clear();
-        for (Procesador p : solucion) {
-            this.solucion.add(new Procesador(p));
-        }
+    public void guardarSolucion(List<Procesador> solucion){
+        this.solucion = solucion;
     }
 
-
-    public List<Procesador> getSolucion(){
-        return this.solucion;
-    }
 
     public void mostrarSolucion(){
         System.out.println("Backtracking: ");
@@ -57,10 +50,8 @@ public class SolucionBacktracking {
             for(int i = 0;i< solucion.size();i++){
                 System.out.println(solucion.get(i).getId()+"{"+solucion.get(i).getTareas()+"}");
             }
-            System.out.println("Estados Generados: ");
-            System.out.println(this.getEstadosGenerados());
-            System.out.println("Tiempo Maximo: ");
-            System.out.println(this.getMejorTiempoMaximo());
+            System.out.println("Estados Generados: "+this.getEstadosGenerados());
+            System.out.println("Tiempo Maximo: "+this.getMejorTiempoMaximo());
         }else{
             System.out.println("No hay Solucion");
 

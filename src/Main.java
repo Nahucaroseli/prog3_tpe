@@ -6,14 +6,14 @@ public class Main {
 
 
         Backtracking backtracking = new Backtracking("src/datasets/Procesadores.csv","src/datasets/Tareas.csv");
-        SolucionBacktracking resultBack = backtracking.backtracking(10);
+        SolucionBacktracking resultBack = backtracking.backtracking(200);
         resultBack.mostrarSolucion();
 
 
         System.out.println(" ");
 
         Greedy greedy = new Greedy("src/datasets/Procesadores.csv","src/datasets/Tareas.csv");
-        SolucionGreedy resultGreedy = greedy.greedy(10);
+        SolucionGreedy resultGreedy = greedy.greedy(200);
         resultGreedy.mostrarSolucion();
     }
 

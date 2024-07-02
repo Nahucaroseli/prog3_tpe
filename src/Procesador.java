@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Procesador {
@@ -25,7 +25,7 @@ public class Procesador {
 
 
     public Procesador(String codigo, String id, Boolean refrigerado, Integer anio) {
-        tareas = new ArrayList<>();
+        tareas = new LinkedList<>();
         this.codigo = codigo;
         this.id = id;
         this.refrigerado = refrigerado;
@@ -62,7 +62,7 @@ public class Procesador {
     }
 
     public List<Tarea> getTareas() {
-        return new ArrayList<>(tareas);
+        return new LinkedList<>(tareas);
     }
 
 

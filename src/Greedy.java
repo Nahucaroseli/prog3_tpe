@@ -5,14 +5,16 @@ public class Greedy {
 
     private List<Tarea> tareas;
     private List<Procesador> procesadores;
-    private SolucionGreedy solucion;
+    private SolucionGreedy solucionGreedy;
+    private List<Procesador> solucion;
 
 
 
     public Greedy(String pathProcesadores, String pathTareas){
         this.procesadores =new LinkedList<>();
+        this.solucion = new LinkedList<>();
         this.tareas = new LinkedList<>();
-        this.solucion = new SolucionGreedy(0,0);
+        this.solucionGreedy = new SolucionGreedy(0,0);
         CSVReader reader = new CSVReader();
         reader.readTasks(pathTareas,new HashMap(),new TreeWithNode(),new SimpleLinkedList<>(),tareas);
         reader.readProcessors(pathProcesadores,procesadores);
@@ -25,15 +27,15 @@ public class Greedy {
         En cada iteracion de while,se verifican las dos restricciones del enunciado y se elige el procesador que menos carga tiene en ese momento,luego se guarda
         el procesador en una variable auxiliar, el cual va a servir despues para sacar el index de la lista solucion
         y reemplazarlo por el procesador con la tarea asignada en la clase SolucionGreedy. Ademas, cuando la lista
-        de tareas quede vacia, se actualiza el tiempo global y se retorna la solucion. La clase SolucionGreedy se encarga
-        de almacenar y actualizar la cantidad de tareas asignadas, los candidatos del algoritmo y la solucion resultante. Por ultimo
+        de tareas quede vacia, se actualiza el tiempo global, se guarda la solucion, y se retorna. La clase SolucionGreedy se encarga
+        de almacenar la solucion y actualizar la cantidad de tareas asignadas y los candidatos del algoritmo. Por ultimo
         se muestran los datos resultantes del algoritmo al usuario.
      */
 
 
     public SolucionGreedy greedy(int tiempoX){
-        this.solucion = greedy(new ArrayList<>(procesadores),new ArrayList<>(tareas),tiempoX);
-        return this.solucion;
+        this.solucionGreedy = greedy(new ArrayList<>(procesadores),new ArrayList<>(tareas),tiempoX);
+        return this.solucionGreedy;
     }
 
     private SolucionGreedy greedy(List<Procesador> solucion, List<Tarea> tareas,int tiempoX){
@@ -45,7 +47,7 @@ public class Greedy {
 
             menorTiempoMaximoProcesador = Integer.MAX_VALUE;
             Procesador procesadorConMenosCarga = null;
-            this.solucion.actualizarCandidatosConsiderados();
+            this.solucionGreedy.actualizarCandidatosConsiderados();
             for(Procesador p:solucion){
 
                 if(esValido(p,t,tiempoX)){
@@ -60,12 +62,12 @@ public class Greedy {
             if (procesadorConMenosCarga != null) {
 
                 procesadorConMenosCarga.asignarTarea(t);
-                this.solucion.actualizarCantTareasAsignadas();
-                int index = this.solucion.getSolucion().indexOf(procesadorConMenosCarga);
+                this.solucionGreedy.actualizarCantTareasAsignadas();
+                int index = this.solucion.indexOf(procesadorConMenosCarga);
                 if (index != -1) {
-                    this.solucion.reemplazarProcesadorEnPosicionEspecifica(index,procesadorConMenosCarga);
+                    this.solucion.set(index,procesadorConMenosCarga);
                 } else {
-                    this.solucion.agregarProcesadorASolucion(procesadorConMenosCarga);
+                    this.solucion.add(procesadorConMenosCarga);
                 }
                 int tiempoEjecucionActual = procesadorConMenosCarga.getTiempoMaximoEjecucion();
                 if (tiempoEjecucionActual > tiempoMaximoGlobal) {
@@ -73,8 +75,9 @@ public class Greedy {
                 }
             }
         }
-        this.solucion.actualizarTiempoMaximo(tiempoMaximoGlobal);
-        return this.solucion;
+        this.solucionGreedy.actualizarTiempoMaximo(tiempoMaximoGlobal);
+        this.solucionGreedy.guardarSolucion(this.solucion);
+        return this.solucionGreedy;
     }
 
     private boolean esValido(Procesador p,Tarea t,int tiempoX){
